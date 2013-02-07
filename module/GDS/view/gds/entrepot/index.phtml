@@ -1,0 +1,28 @@
+<?php
+// module/Album/view/entrepot/entrepot/index.phtml:
+
+$title = 'Mes Entrepots';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url('entrepot', array('action'=>'add'));?>">Nouvel entrepot</a>
+</p>
+
+<table class="table">
+<tr>
+    <th>Nom</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach ($entrepots as $entrepot) : ?>
+<tr>
+    <td><?php echo $this->escapeHtml($entrepot->nom);?></td>
+    <td>
+        <a href="<?php echo $this->url('entrepot',
+            array('action'=>'edit', 'id' => $entrepot->id));?>">Modifier</a>
+        <a href="<?php echo $this->url('entrepot',
+            array('action'=>'delete', 'id' => $entrepot->id));?>">Supprimer</a>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>

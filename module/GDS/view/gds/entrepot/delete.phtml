@@ -1,0 +1,25 @@
+<?php
+// module/Album/view/album/album/delete.phtml:
+
+$title = 'Supprimer un entrepot';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<p>Etes-vous sûr de vouloir supprimer l'entrepot
+    '<?php echo $this->escapeHtml($entrepot->nom); ?>' ?<br/>
+	(La suppression entrainera la perte des informations relatives au stock de cet entrepot)
+</p>
+<?php
+$url = $this->url('entrepot', array(
+    'action' => 'delete',
+    'id'     => $this->id,
+));
+?>
+<form action="<?php echo $url; ?>" method="post">
+<div>
+    <input type="hidden" name="id" value="<?php echo (int) $entrepot->id; ?>" />
+    <input type="submit" name="del" value="Oui" />
+    <input type="submit" name="del" value="Non" />
+</div>
+</form>
