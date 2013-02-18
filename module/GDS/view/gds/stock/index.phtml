@@ -8,7 +8,7 @@ $this->headTitle($title);
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
 <p>
-    <a href="<?php echo $this->url('stock', array('action'=>'add', 'id' => $entrepot->id));?>">Ajouter un produit</a>
+    <a class="btn btn-success" href="<?php echo $this->url('stock', array('action'=>'add', 'id' => $entrepot->id));?>">Ajouter un produit</a>
 </p>
 
 <?php	if ($stocks) :  ?>
@@ -16,20 +16,20 @@ $this->headTitle($title);
 <table class="table">
 <tr>
     <th>Produit</th>
-	<th>Quantite</th>
+	<th>Solde</th>
     <th>&nbsp;</th>
 </tr>
-<?php foreach ($stocks as $stock) : var_dump($stock);?>
+<?php foreach ($stocks as $stock) : ?>
 <tr>
     <td><?php echo $this->escapeHtml($stock->libelle);?></td>
     <td><?php echo $this->escapeHtml($stock->quantite);?></td>
     <td>
-		<a href="<?php echo $this->url('stock',
-            array('action'=>'index', 'id' => $entrepot->id));?>">Voir stock</a>
-        <a href="<?php echo $this->url('entrepot',
-            array('action'=>'edit', 'id' => $entrepot->id));?>">Modifier</a>
-        <a href="<?php echo $this->url('entrepot',
-            array('action'=>'delete', 'id' => $entrepot->id));?>">Supprimer</a>
+		<a class="btn" href="<?php echo $this->url('stock',
+            array('action'=>'index', 'id' => $entrepot->id));?>">Débiter</a>
+        <a class="btn" href="<?php echo $this->url('entrepot',
+            array('action'=>'edit', 'id' => $entrepot->id));?>">Créditer</a>
+        <a class="btn" href="<?php echo $this->url('entrepot',
+            array('action'=>'delete', 'id' => $entrepot->id));?>">Transférer</a>
     </td>
 </tr>
 <?php endforeach; ?>
