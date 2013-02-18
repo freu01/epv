@@ -32,9 +32,8 @@ class StockController extends AbstractActionController
 	
 	public function addAction()
     {
-		$request = $this->getRequest();
 		$idEntrepot = (int) $this->params()->fromRoute('id', 0);
-        if (!$idEntrepot && !$request->isPost()) {
+        if (!$idEntrepot) {
             return $this->redirect()->toRoute('entrepot', array(
                 'action' => 'index'
             ));
@@ -45,9 +44,9 @@ class StockController extends AbstractActionController
 		$form->get('idEntrepot')->setValue($idEntrepot);
 		
 		$produits = $this->getProduitTable()->fetchAllForSelect();
-		
 		$form->get('idProduit')->setValueOptions($produits);
-
+		
+		$request = $this->getRequest();
         if ($request->isPost()) {
             $stock = new Stock();
             $form->setInputFilter($stock->getInputFilter());
@@ -57,12 +56,16 @@ class StockController extends AbstractActionController
                 $stock->exchangeArray($form->getData());
                 $this->getStockTable()->saveStock($stock);
 
-                return $this->redirect()->toRoute('stock', array('id' => $idEntrepot));
+                return $this->redirect()->toRoute('stock', array(
+					'action' => 'index',
+					'id' => $idEntrepot));
             }
         }
         return array('form' => $form,
 					 'entrepot' => $this->getEntrepotTable()->getEntrepot($idEntrepot));
     }
+	
+	
 	
 	public function getStockTable()
 	{
