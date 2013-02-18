@@ -15,12 +15,14 @@ $this->headTitle($title);
 
 <table class="table">
 <tr>
-    <th>Nom</th>
+    <th>Produit</th>
+	<th>Quantite</th>
     <th>&nbsp;</th>
 </tr>
-<?php foreach ($entrepots as $entrepot) : ?>
+<?php foreach ($stocks as $stock) : var_dump($stock);?>
 <tr>
-    <td><?php echo $this->escapeHtml($entrepot->nom);?></td>
+    <td><?php echo $this->escapeHtml($stock->libelle);?></td>
+    <td><?php echo $this->escapeHtml($stock->quantite);?></td>
     <td>
 		<a href="<?php echo $this->url('stock',
             array('action'=>'index', 'id' => $entrepot->id));?>">Voir stock</a>

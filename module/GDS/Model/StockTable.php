@@ -3,6 +3,7 @@ namespace GDS\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Select;
+use Zend\Db\Sql\Sql;
 
 class StockTable
 {
@@ -31,12 +32,33 @@ class StockTable
         $row = $rowset->current();
         return $row;
     }
+	
+	public function getStockFromEntrepot($idEntrepot)
+	{
+		$id = (int) $idEntrepot;
+		
+		$adapter = $this->tableGateway->getAdapter();
+		$sql = new Sql($adapter);
+		$select = $sql->select();
+		$select	->from($this->tableGateway->getTable())
+				->join(array('p' => 'produit'), 'p.id = stock.idProduit', array('libelle'))
+				->where('stock.idEntrepot = ' . $id);
+		
+        // $rowset = $this->tableGateway->selectWith($select);
+        // $row = $rowset->current();
+		$selectString = $sql->getSqlStringForSqlObject($select);
+		$results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+        return $results;
+		
+	}
 
     public function saveStock(Stock $stock)
     {
         $data = array(
             'id' => $stock->id,
-            'nom'  => $stock->nom,
+            'idEntrepot' => $stock->idEntrepot,
+            'idProduit' => $stock->idProduit,
+            'quantite' => $stock->quantite,
         );
 
         $id = (int)$stock->id;

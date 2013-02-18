@@ -20,6 +20,16 @@ class ProduitTable
         $resultSet = $this->tableGateway->selectWith($select);
         return $resultSet;
     }
+	
+	public function fetchAllForSelect()
+	{
+		$resultSet = $this->fetchAll();
+		$produits = array();
+		foreach($resultSet as $result) {
+			$produits[$result->id] = $result->libelle;
+		}
+		return $produits;
+	}
 
     public function getProduit($id)
     {
