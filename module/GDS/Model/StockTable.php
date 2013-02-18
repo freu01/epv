@@ -29,9 +29,6 @@ class StockTable
 			   ->where('stock.idEntrepot = ' . $id);
         $rowset = $this->tableGateway->selectWith($select);
         $row = $rowset->current();
-        if (!$row) {
-            throw new \Exception("Could not find row $id");
-        }
         return $row;
     }
 

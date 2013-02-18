@@ -18,6 +18,8 @@ $this->headTitle($title);
 <tr>
     <td><?php echo $this->escapeHtml($entrepot->nom);?></td>
     <td>
+		<a href="<?php echo $this->url('stock',
+            array('action'=>'index', 'id' => $entrepot->id));?>">Voir stock</a>
         <a href="<?php echo $this->url('entrepot',
             array('action'=>'edit', 'id' => $entrepot->id));?>">Modifier</a>
         <a href="<?php echo $this->url('entrepot',

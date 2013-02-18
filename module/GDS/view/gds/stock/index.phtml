@@ -1,7 +1,40 @@
 <?php
 // module/Album/view/produit/produit/index.phtml:
 
-$title = 'Mes Stocks';
+$title = 'Mon Stock : ';
+$title .= $entrepot->nom;
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<p>
+    <a href="<?php echo $this->url('stock', array('action'=>'add', 'id' => $entrepot->id));?>">Ajouter un produit</a>
+</p>
+
+<?php	if ($stocks) :  ?>
+
+<table class="table">
+<tr>
+    <th>Nom</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach ($entrepots as $entrepot) : ?>
+<tr>
+    <td><?php echo $this->escapeHtml($entrepot->nom);?></td>
+    <td>
+		<a href="<?php echo $this->url('stock',
+            array('action'=>'index', 'id' => $entrepot->id));?>">Voir stock</a>
+        <a href="<?php echo $this->url('entrepot',
+            array('action'=>'edit', 'id' => $entrepot->id));?>">Modifier</a>
+        <a href="<?php echo $this->url('entrepot',
+            array('action'=>'delete', 'id' => $entrepot->id));?>">Supprimer</a>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
+
+<?php else : ?>
+
+<p> Aucun produit au stock </p>
+
+<?php endif; ?>
