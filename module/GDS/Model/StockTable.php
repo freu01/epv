@@ -26,8 +26,7 @@ class StockTable
     {
         $id  = (int) $id;
 		$select = new Select($this->tableGateway->getTable());
-		$select->join(array('e' => 'entrepot'), 'e.id = stock.idEntrepot')
-			   ->where('stock.idEntrepot = ' . $id);
+		$select->where('id = ' . $id);
         $rowset = $this->tableGateway->selectWith($select);
         $row = $rowset->current();
         return $row;

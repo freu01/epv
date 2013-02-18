@@ -65,7 +65,22 @@ class StockController extends AbstractActionController
 					 'entrepot' => $this->getEntrepotTable()->getEntrepot($idEntrepot));
     }
 	
+	public function debiterAction()
+	{
+		$id = (int) $this->params()->fromRoute('id', 0);
+		
+		$form = new StockForm();
+		$form->get('id')->setValue($id);
+		$form->get('submit')->setValue('Débiter');
+		return array('form' => $form,
+					 'stock' => $this->getStockTable()->getStock($id),
+					 );
+	}
 	
+	public function crediterAction()
+	{
+	
+	}
 	
 	public function getStockTable()
 	{

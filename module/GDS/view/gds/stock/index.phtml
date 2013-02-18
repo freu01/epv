@@ -25,11 +25,11 @@ $this->headTitle($title);
     <td><?php echo $this->escapeHtml($stock->quantite);?></td>
     <td>
 		<a class="btn" href="<?php echo $this->url('stock',
-            array('action'=>'index', 'id' => $entrepot->id));?>">Débiter</a>
+            array('action'=>'debiter', 'id' => $stock->id));?>">Débiter</a>
         <a class="btn" href="<?php echo $this->url('entrepot',
-            array('action'=>'edit', 'id' => $entrepot->id));?>">Créditer</a>
+            array('action'=>'crediter', 'id' => $stock->id));?>">Créditer</a>
         <a class="btn" href="<?php echo $this->url('entrepot',
-            array('action'=>'delete', 'id' => $entrepot->id));?>">Transférer</a>
+            array('action'=>'tranferer', 'id' => $stock->id));?>">Transférer</a>
     </td>
 </tr>
 <?php endforeach; ?>

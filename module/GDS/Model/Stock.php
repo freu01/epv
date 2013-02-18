@@ -10,7 +10,7 @@ class Stock
 {
     public  $id;
     public $idEntrepot;
-	public $idStock;
+	public $idProduit;
 	public $quantite;
 	protected $inputFilter;
 
