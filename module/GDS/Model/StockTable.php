@@ -46,7 +46,18 @@ class StockTable
 		$selectString = $sql->getSqlStringForSqlObject($select);
 		$results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
         return $results;
-		
+	}
+	
+	public function getStockFromProduit($idEntrepot, $idProduit)
+	{
+		$idEntrepot  = (int) $idEntrepot;
+		$idProduit  = (int) $idProduit;
+		$select = new Select($this->tableGateway->getTable());
+		$select->where('idEntrepot = ' . $idEntrepot);
+		$select->where('idProduit = ' . $idProduit);
+        $rowset = $this->tableGateway->selectWith($select);
+        $row = $rowset->current();
+        return $row;
 	}
 	
 	public function getStockFromProduitAndEntrepotIds($idEntrepot, $idProduit)
@@ -72,13 +83,7 @@ class StockTable
 
         $id = (int)$stock->id;
         if ($id == 0) {
-			if($oldStock = $this->getStockFromProduitAndEntrepotIds($stock->idEntrepot, 
-														 $stock->idProduit)) {
-				$data["quantite"] += $oldStock->quantite;
-				$this->tableGateway->update($data, array('id' => $oldStock->id));
-			} else {
-				$this->tableGateway->insert($data);
-			}
+			$this->tableGateway->insert($data);
         } else {
             if ($this->getStock($id)) {
                 $this->tableGateway->update($data, array('id' => $id));

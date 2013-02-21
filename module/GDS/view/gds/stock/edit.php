@@ -2,7 +2,7 @@
 // module/Album/view/album/album/add.phtml:
 
 $title = $entrepot->nom;
-$title .= ' : Ajouter un produit';
+$title .= ' : Modifier un stock';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>

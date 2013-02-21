@@ -20,6 +20,16 @@ class EntrepotTable
         $resultSet = $this->tableGateway->selectWith($select);
         return $resultSet;
     }
+	
+	public function fetchAllForSelect()
+	{
+		$resultSet = $this->fetchAll();
+		$entrepots = array();
+		foreach($resultSet as $result) {
+			$entrepots[$result->id] = $result->nom;
+		}
+		return $entrepots;
+	}
 
     public function getEntrepot($id)
     {

@@ -22,10 +22,10 @@ class Stock
         $this->quantite   	= (isset($data['quantite'])) 	? $data['quantite'] 	: null;
     }
 	
-	// public function getArrayCopy()
-    // {
-        // return get_object_vars($this);
-    // }
+	public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
 	
 	public function setInputFilter(InputFilterInterface $inputFilter)
     {
@@ -64,7 +64,6 @@ class Stock
 			
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'quantite',
-                'required' => false,
                 'filters'  => array(
                     array('name' => 'Int'),
                 ),

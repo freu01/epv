@@ -2,6 +2,8 @@
 return array(
     'modules' => array(
         'Application',
+        'ZfcBase',
+        'ZfcUser',
 		'GDS',
     ),
     'module_listener_options' => array(

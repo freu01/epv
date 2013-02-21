@@ -11,9 +11,21 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\ModuleManager\ModuleManager;
 
 class Module
 {
+	public function init(ModuleManager $moduleManager)
+	{
+		$sharedEvents = $moduleManager->getEventManager()->getSharedManager();
+		$sharedEvents->attach(__NAMESPACE__, 'dispatch', function($e) {
+			$controller = $e->getTarget();
+			if (!$controller->zfcUserAuthentication()->hasIdentity()) {
+				return $controller->redirect()->toRoute('zfcuser/login');
+			}
+		}, 100);
+	}
+	
     public function onBootstrap(MvcEvent $e)
     {
         $e->getApplication()->getServiceManager()->get('translator');
@@ -37,4 +49,11 @@ class Module
             ),
         );
     }
+	
+	// public function mvcPreDispatch($event)
+	// {
+		// $di = $event->getTarget()->getServiceManager();
+		// $auth = $di->get('User\Event\Authentication');
+		// return $auth->preDispatch($event);
+	// }
 }

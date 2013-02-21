@@ -5,6 +5,7 @@ return array(
             'GDS\Controller\Entrepot' 	=> 'GDS\Controller\EntrepotController',
             'GDS\Controller\Produit' 	=> 'GDS\Controller\ProduitController',
             'GDS\Controller\Stock' 		=> 'GDS\Controller\StockController',
+            'GDS\Controller\Report' 	=> 'GDS\Controller\ReportController',
         ),
     ),
 	// The following section is new and should be added to your file
@@ -52,6 +53,19 @@ return array(
                     ),
                 ),
             ),
+			'report' => array(
+				'type'	=> 'segment',
+				'options'	=> array(
+					'route'		=> '/report[/:id]',
+					'constraints'	=> array(
+						'id' => '[0-9]+',
+					),
+					'defaults' => array(
+                        'controller' => 'GDS\Controller\Report',
+                        'action'     => 'monthlyReportPdf',
+                    ),
+				),
+			),
         ),
     ),
     'view_manager' => array(
@@ -59,6 +73,7 @@ return array(
             'entrepot' => __DIR__ . '/../view',
             'produit' => __DIR__ . '/../view',
             'stock' => __DIR__ . '/../view',
+            'report' => __DIR__ . '/../view',
         ),
     ),
 );

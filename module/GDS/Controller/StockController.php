@@ -51,9 +51,17 @@ class StockController extends AbstractActionController
             $stock = new Stock();
             $form->setInputFilter($stock->getInputFilter());
             $form->setData($request->getPost());
-
+// var_dump($request->getPost());exit;
             if ($form->isValid()) {
                 $stock->exchangeArray($form->getData());
+				$currentStock = $this->getStockTable()->getStockFromProduit(
+					$stock->idEntrepot, 
+					$stock->idProduit
+				);
+				
+				if($currentStock){
+					$stock->quantite += $currentStock->quantite;
+				}
                 $this->getStockTable()->saveStock($stock);
 
                 return $this->redirect()->toRoute('stock', array(
@@ -65,13 +73,77 @@ class StockController extends AbstractActionController
 					 'entrepot' => $this->getEntrepotTable()->getEntrepot($idEntrepot));
     }
 	
+	public function editAction()
+	{
+		$id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('stock', array(
+                'action' => 'index'
+            ));
+        }
+        $stock = $this->getStockTable()->getStock($id);
+
+        $form  = new StockForm();
+        $form->bind($stock);
+        $form->get('submit')->setAttribute('value', 'Modifier');
+		$form->get('idProduit')->setValue($stock->idProduit);
+		
+		$entrepots = $this->getEntrepotTable()->fetchAllForSelect();
+		$form->get('idEntrepot')->setValueOptions($entrepots);
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setInputFilter($stock->getInputFilter());
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $this->getStockTable()->saveStock($form->getData());
+
+                // Redirect to list of albums
+                return $this->redirect()->toRoute('stock');
+            }
+        }
+
+        return array(
+            'id' => $id,
+			'entrepot' => $this->getEntrepotTable()->getEntrepot($stock->idEntrepot),
+            'form' => $form,
+        );
+	}
+	
 	public function debiterAction()
 	{
 		$id = (int) $this->params()->fromRoute('id', 0);
+		$action = 'Débiter';
 		
-		$form = new StockForm();
+		$form = new StockTransactionForm();
+        $form->get('submit')->setValue($action);
 		$form->get('id')->setValue($id);
-		$form->get('submit')->setValue('Débiter');
+		
+		$request = $this->getRequest();
+        if ($request->isPost()) {
+            $stock = new Stock();
+            $form->setInputFilter($stock->getInputFilter());
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $stock->exchangeArray($form->getData());
+				$currentStock = $this->getStockTable()->getStockFromProduit(
+					$stock->idEntrepot, 
+					$stock->idProduit
+				);
+				
+				if($currentStock){
+					$stock->quantite += $currentStock->quantite;
+				}
+                $this->getStockTable()->saveStock($stock);
+
+                return $this->redirect()->toRoute('stock', array(
+					'action' => 'index',
+					'id' => $idEntrepot));
+            }
+        }
+		
 		return array('form' => $form,
 					 'stock' => $this->getStockTable()->getStock($id),
 					 );

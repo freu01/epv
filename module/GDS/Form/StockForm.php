@@ -16,9 +16,11 @@ class StockForm extends Form
             ),
         ));
 		$this->add(array(
+			'type' => 'Zend\Form\Element\Select',
             'name' => 'idEntrepot',
-            'attributes' => array(
-                'type'  => 'hidden',
+            'options' => array(
+				'label' => 'Entrepot',
+				'empty_option' => 'Choisissez un produit',
             ),
         ));
         // $this->add(array(
@@ -36,12 +38,6 @@ class StockForm extends Form
 			'options' => array(
 				'label' => 'Produit',
 				'empty_option' => 'Choisissez un produit',
-				// 'value_options' => array(
-					// '0' => 'French',
-					// '1' => 'English',
-					// '2' => 'Japanese',
-					// '3' => 'Chinese',
-				// ),
 			)
 		));
 		$this->add(array(

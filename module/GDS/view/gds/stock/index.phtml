@@ -1,5 +1,4 @@
 <?php
-// module/Album/view/produit/produit/index.phtml:
 
 $title = 'Mon Stock : ';
 $title .= $entrepot->nom;
@@ -8,7 +7,7 @@ $this->headTitle($title);
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
 <p>
-    <a class="btn btn-success" href="<?php echo $this->url('stock', array('action'=>'add', 'id' => $entrepot->id));?>">Ajouter un produit</a>
+    <a class="btn" href="<?php echo $this->url('stock', array('action'=>'add', 'id' => $entrepot->id));?>">Ajouter un produit</a>
 </p>
 
 <?php	if ($stocks) :  ?>
@@ -25,11 +24,7 @@ $this->headTitle($title);
     <td><?php echo $this->escapeHtml($stock->quantite);?></td>
     <td>
 		<a class="btn" href="<?php echo $this->url('stock',
-            array('action'=>'debiter', 'id' => $stock->id));?>">Débiter</a>
-        <a class="btn" href="<?php echo $this->url('entrepot',
-            array('action'=>'crediter', 'id' => $stock->id));?>">Créditer</a>
-        <a class="btn" href="<?php echo $this->url('entrepot',
-            array('action'=>'tranferer', 'id' => $stock->id));?>">Transférer</a>
+            array('action'=>'edit', 'id' => $stock->id));?>">Modifier</a>
     </td>
 </tr>
 <?php endforeach; ?>
